@@ -37,11 +37,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
   default_node_pool {
     name                 = "agentpool"
-    vm_size              = var.node_type
+    vm_size              = "Standard_B2pts_v2"
     os_disk_size_gb      = 32
-    min_count            = var.nodes_min
-    max_count            = var.nodes_max
-    auto_scaling_enabled = true
+    node_count           = 1
     type                 = "VirtualMachineScaleSets"
 
     upgrade_settings {
@@ -55,18 +53,42 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "D64" {
+  name                  = "D64"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
+  vm_size               = "Standard_D64pls_v5"
+  min_count             = 0
+  max_count             = 1
+
+  tags = {
+    Environment = "Production"
+  }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "D32" {
+  name                  = "D32"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
+  vm_size               = "Standard_D32pls_v5"
+  min_count             = 0
+  max_count             = 1
+
+  tags = {
+    Environment = "Production"
+  }
+}
+
 # storage
 resource "azurerm_storage_account" "storage" {
   location                 = azurerm_resource_group.rg.location
   resource_group_name      = azurerm_resource_group.rg.name
-  name                     = "cgmt"
+  name                     = "tetra-storage-account"
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
 resource "azurerm_storage_container" "blob_container" {
   storage_account_name  = azurerm_storage_account.storage.name
-  name                  = "cgm-container"
+  name                  = "tetra-container"
   container_access_type = "private"
 }
 
@@ -82,7 +104,7 @@ resource "azurerm_federated_identity_credential" "workload-identity-credential" 
   name                = "aks-workload-identity-credential"
   parent_id           = azurerm_user_assigned_identity.workload-identity.id
   issuer              = azurerm_kubernetes_cluster.k8s.oidc_issuer_url
-  subject             = "system:serviceaccount:cgm:cgm-sa"
+  subject             = "system:serviceaccount:tetra:tetra-sa"
   audience            = ["api://AzureADTokenExchange"]
 }
 

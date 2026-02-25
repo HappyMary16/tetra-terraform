@@ -1,22 +1,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: cgm-ingress
+  name: tetra-ingress
   annotations:
     cert-manager.io/issuer: letsencrypt
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   tls:
     - hosts:
-        - "cgm.{{ .Values.cgm.clusterDomain }}"
-      secretName: cgm-certificate-secret
+        - "{{ .Values.tetra.clusterDomain }}"
+      secretName: tetra-certificate-secret
   rules:
-    - host: "cgm.{{ .Values.cgm.clusterDomain }}"
+    - host: "{{ .Values.tetra.clusterDomain }}"
       http:
         paths:
           - backend:
               service:
-                name: cgm-service
+                name: tetra-service
                 port:
                   number: 80
             path: /

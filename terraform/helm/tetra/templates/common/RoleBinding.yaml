@@ -1,11 +1,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: cgm-role-binding
+  name: tetra-role-binding
 subjects:
   - kind: ServiceAccount
-    name: cgm-sa
+    name: tetra-sa
 roleRef:
   kind: Role
-  name: cgm-role
+  name: tetra-role
   apiGroup: rbac.authorization.k8s.io
