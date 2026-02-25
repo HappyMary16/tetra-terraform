@@ -16,7 +16,7 @@ spec:
       containers:
         - name: tetra-facade
           imagePullPolicy: Always
-          image: ghcr.io/happymary16/tetra/tetra:latest
+          image: ghcr.io/happymary16/tetra:latest
           args:
             - tetra-facade
           ports:
