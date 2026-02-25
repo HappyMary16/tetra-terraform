@@ -54,7 +54,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "D64" {
-  name                  = "D64"
+  name                  = "d64"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vm_size               = "Standard_D64pls_v5"
   min_count             = 0
@@ -66,7 +66,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "D64" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "D32" {
-  name                  = "D32"
+  name                  = "d32"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vm_size               = "Standard_D32pls_v5"
   min_count             = 0
@@ -81,7 +81,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "D32" {
 resource "azurerm_storage_account" "storage" {
   location                 = azurerm_resource_group.rg.location
   resource_group_name      = azurerm_resource_group.rg.name
-  name                     = "tetra-storage-account"
+  name                     = "tetrastorageaccount"
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
