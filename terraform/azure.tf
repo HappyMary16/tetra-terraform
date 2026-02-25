@@ -59,6 +59,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "D64" {
   vm_size               = "Standard_D64pls_v5"
   min_count             = 0
   max_count             = 1
+  auto_scaling_enabled  = true
 
   tags = {
     Environment = "Production"
@@ -71,6 +72,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "D32" {
   vm_size               = "Standard_D32pls_v5"
   min_count             = 0
   max_count             = 1
+  auto_scaling_enabled  = true
 
   tags = {
     Environment = "Production"
