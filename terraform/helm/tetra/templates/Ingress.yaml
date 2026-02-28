@@ -16,7 +16,7 @@ spec:
         paths:
           - backend:
               service:
-                name: tetra-service
+                name: tetra-facade-service
                 port:
                   number: 80
             path: /
