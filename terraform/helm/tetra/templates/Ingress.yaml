@@ -4,6 +4,11 @@ metadata:
   name: tetra-ingress
   annotations:
     cert-manager.io/issuer: letsencrypt
+    # Model input files are large, NGINX allows only 1m by default.
+    # Keep in sync with spring.servlet.multipart.max-request-size in tetra-facade.
+    nginx.ingress.kubernetes.io/proxy-body-size: "300m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   tls:
